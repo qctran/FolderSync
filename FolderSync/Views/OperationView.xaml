@@ -1,0 +1,66 @@
+﻿<UserControl x:Class="FolderSync.Views.OperationView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:FolderSync.Views"
+             xmlns:vm="clr-namespace:FolderSync.ViewModels"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.DataContext>
+        <vm:OperationViewModel/>
+    </UserControl.DataContext>
+    <Grid>
+        <StackPanel Orientation="Vertical">
+            <Grid Width="600" Height="60" VerticalAlignment="Top">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="20"/>
+                </Grid.RowDefinitions>
+                <Grid Grid.Column="0" Grid.Row="0">
+                    <Label>Source</Label>
+                </Grid>
+                <Grid Grid.Column="0" Grid.Row="1">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBox Width="260" HorizontalAlignment="Left" Text="{Binding SourcePath}"/>
+                        <Button Width="30" Margin="1,0,0,0" VerticalAlignment="Bottom" Command="{Binding BrowseSourceCmd}"
+                                CommandParameter="BrowseSource">...</Button>
+                    </StackPanel>
+
+                </Grid>
+                <Grid Grid.Column="1" Grid.Row="0">
+                    <Label>Target</Label>
+                </Grid>
+                <Grid Grid.Column="1" Grid.Row="1">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBox Width="260" HorizontalAlignment="Left" Text="{Binding TargetPath}"/>
+                        <Button Width="30" Margin="1,0,0,0" VerticalAlignment="Bottom" Command="{Binding BrowseTargetCmd}"
+                                CommandParameter="BrowseTarget">...</Button>
+                    </StackPanel>
+                </Grid>
+            </Grid>
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="100,10,0,10">
+                <Button Width="50" HorizontalContentAlignment="Center" Margin="3" Command="{Binding AnalyzeCmd}">Analyse</Button>
+                <Button Width="50" HorizontalContentAlignment="Center" Margin="3" Command="{Binding ExecCmd}">Execute</Button>
+            </StackPanel>
+
+            <Border BorderBrush="DarkSeaGreen" BorderThickness="2" Width="580" Height="300" >
+                <ListView Name="FileGrid" ItemsSource="{Binding FileList}">
+                    <ListView.View>
+                        <GridView x:Name="fileName">
+                            <GridViewColumn Header="File" DisplayMemberBinding="{Binding File}" Width="400"/>
+                            <GridViewColumn Header="Modified Date" DisplayMemberBinding="{Binding ModifiedDate}" Width="100"/>
+                            <GridViewColumn Header="Action" DisplayMemberBinding="{Binding Code}" Width="60"/>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </Border>
+
+        </StackPanel>
+    </Grid>
+</UserControl>
